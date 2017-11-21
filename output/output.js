@@ -1,0 +1,1 @@
+data = [{"index": 1, "errors": ["exomple"], "pre-output": "this is an <input data-wordindex=\"3\" placeholder=\"exomple\"></input> of a record .", "input": ["this", "is", "an", "exomple", "of", "a", "record", "."], "tid": 1, "output": ["this", "is", "an", "exomple", "of", "a", "record", "."], "original": "this is an exomple of a record."}]

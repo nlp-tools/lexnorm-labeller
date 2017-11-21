@@ -1,0 +1,254 @@
+<html>
+	<head>
+		<link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
+		<style>	
+			body, input, button {
+				font-family: 'Nunito', sans-serif;
+			}
+			html {
+				padding: 0;
+			}
+			body {
+				background: #ddd;
+				padding: 0;
+				padding-top: 50px;
+				margin: 0;
+			}
+			table {
+				border-collapse: collapse;
+				color: #222;
+			}
+			tr.completed-row {
+				color: rgba(0, 0, 0, 0.3);
+			}
+
+			td {
+				padding: 15px 5px;
+				line-height: 150%;
+			}
+			td:first-child {
+				width: 5%;
+				text-align: center;
+			}
+			td:last-child {
+				width: 95%;
+			}
+			tr:nth-child(odd) {
+				background: white;
+			}
+			tr:nth-child(even) {
+				background: #f3f3f3;
+			}
+			input {
+				text-align: center;
+				border: 1px solid #d83150;
+				background: rgba(255, 0, 0, 0.1);
+				box-sizing: border-box;
+				padding: 3px;
+			}
+			input:focus {
+				border: 3px solid #ff4769;
+				outline: none;
+				padding: 1px;
+
+			}
+			input.done {
+				border: 1px solid #54ea44;
+				background: rgba(0, 255, 0, 0.1);
+			}
+			input.done:focus {
+				border: 3px solid #68f759;
+			}
+			input.done.done-auto {
+				border: 1px solid #fff435;
+				background: #fffbbc;
+			}
+			input.done.done-auto:focus {
+				border: 3px solid #e0d845;
+			}
+			form {
+				padding: 0;
+				margin: 0;
+			}
+			form .container {
+				max-width: 100%;
+				width: 1280px;
+				margin: 0 auto;
+				display: block;
+				box-shadow: 0 0 7px -3px #222;
+			}
+			::-webkit-input-placeholder {
+				color: #222;
+			}
+
+			nav {
+				background: #222;
+				height: 40px;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+			}
+			nav .container {
+				width: 1280px;
+				max-width: 100%;
+				color: white;
+				margin: 0 auto;
+				font-size: 20px;
+				padding-top: 6px;
+			}
+			#form-submission {
+				background: #222;
+				padding: 10px 0;
+				margin-top: 10px;
+				margin-bottom: 10px;
+
+			}
+			button#submit {
+				width: 200px;
+				border: 1px solid #222;
+				color: #222;
+				background: #eee;
+				margin: 0 auto;
+				display: block;
+				cursor: pointer;
+				font-size: 20px;
+				padding: 15px;
+			}
+			button#submit:hover {
+				background: #467fdb;
+				color: white;
+			}
+			#output-container {
+				background: white;
+				padding-top: 30px;
+				padding-bottom: 30px;
+				margin-top: -10px;
+			}
+			#output-container .container {
+				width: 1280px;
+				margin: 0 auto;
+			}
+			code {
+				font-family: "Courier New", serif;
+				display: block;
+			}
+
+		</style>
+	</head>
+</html>
+<body>
+
+	<nav>
+		<div class="container">
+			<div id="completion-counter">Completed <span id="completion-sofar">0</span>/<span id="completion-total">0</span></div>
+		</div>
+
+	</nav>
+
+	<form id="form">
+		<div class="container">
+			<table id="form-table">
+				<tbody id="form-table-tbody">
+				</tbody>
+			</table>
+		</div>
+	</form>
+
+	<div id="form-submission">
+		<div class="container">
+			<button id="submit">Submit</button>
+
+		</div>
+	</div>
+
+	<div id="output-container">
+		<div class="container">
+			<code id="output-code"></code>
+		</div>
+	</div>
+
+
+</body>
+
+
+<script src="../output/output.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+
+	tableBody = $("#form-table-tbody");
+
+
+	// Generate table
+	count = 0;
+	for(var i = 0; i < data.length; i++) {
+		console.log("hi");
+
+		if(data[i]["pre-output"].search("data-wordindex") > 0) {
+			count++;
+			tableBody.append("<tr data-row-id=\"" + (parseInt(data[i]["tid"]) - 1) + "\"><td>" + count + "</td><td>" + data[i]["pre-output"].toString().replace(",", " ") + "</td></tr>")
+		}
+	}
+
+	trs = $("tr");
+	inputs = $("input");
+	completed = 0;
+	num = inputs.length;
+
+	completion_sofar = $("#completion-sofar");
+	$("#completion-total").html(num);
+
+	inputs.blur(function() {
+		if(!($(this).hasClass("done"))) {
+			completed++;
+		}
+
+
+		$(this).addClass("done");
+		if($(this).val().length == 0) {
+			$(this).addClass("done-auto");
+		} else {
+			$(this).removeClass("done-auto");
+		}
+
+
+
+		if($(this).parent().children("input:not(.done)").length == 0) {
+			$(this).parent().parent().addClass("completed-row")
+		} else {
+			$(this).parent().parent().removeClass("completed-row")
+		}
+
+		
+		completion_sofar.html(completed);
+	})
+
+
+	$("#submit").click(function() {
+		var output_data = {};
+		trs.each(function() {
+			var tr_id = parseInt($(this).data("row-id"));
+			$(this).find("input").each(function() {
+				var word_index = parseInt($(this).data("wordindex"));
+				// Done-auto means it was skipped, and is therefore already valid
+				// Only replace if done, and not done-auto
+				if(!$(this).hasClass("done-auto") && $(this).hasClass("done")) {					
+					data[tr_id]["output"][word_index] = $(this).val();					
+				}
+			});
+		});
+
+		for(var i = 0; i < data.length; i++) {
+			delete data[i]["pre-output"];
+			delete data[i]["original"];
+			delete data[i]["errors"];
+		}
+
+		// Print the data to the code section
+
+		$("#output-code").html(JSON.stringify(data, undefined, 1));
+
+	});
+
+
+</script>

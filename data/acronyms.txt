@@ -1,0 +1,44 @@
+ACL	Anterior Cruciate Ligament
+BM	Boilermaker
+CW	Counter Weights
+DT	Dump Truck
+DR	Doctor
+EMA	Emergency Mangement Advisor
+EMO	Emergency Management Officer
+ERT	Emergency Response Team
+ERTM	Emergency Response Team Member
+ESO	Emergency Services Officer
+EWP	Elevated Work Platform
+FAI	Femoroacetabular Impingement
+FEL	Front End Loader
+FYI	For Your Information
+GP	General Practitioner
+HSE	Health Safety Executive
+HT	Haul Truck
+ICAM	Incident Cause Analysis Method
+IP	Injured Person
+JHA	Job Hazards Analysis
+JSE	Job Safety Analysis
+JSEA	Job Safety Environment Analysis
+LCL	Lateral Collateral Ligament
+LHS	Left Hand Side
+LPG	Liquefied Petroleum Gas
+LRT	Liner Bolt Removal Tool
+LV	Light Vehicle
+LVF	Light Vehicle Fitter
+MCP	Mine Closure Plan
+MRI	Magnetic Resonance Imaging
+NSAIDS	Nonsteroidal Anti-Inflammatory Drugs
+OEM	Original Equipment Manufacturer
+OJT	On the Job Trainer
+PPE	Personal Protective Equipment
+PT	Part Time
+PVC	Polyvinyl Chloride
+RC	Remote Controlled
+RCD	Residual Current Device
+RFDS	Royal Flying Doctor Service
+RHS	Right Hand Side
+RSI	Repetetive Straining Injury
+SWL	Safe Work Load
+TA	Trade Assistant
+VOC	Verification of Competency
